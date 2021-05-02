@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_app_title">About the app</string>
+    <string name="about_app">A few words about the app</string>
+    <string name="about_app_text">The app was created sacrificing time, health and hours of sleep</string>
+    <string name="about_app_development">
+        During the development process I was sticking to the ADD methodology and the
+        worst programming practices just to make the bicycle wheels spin
+    </string>
+    <string name="about_app_gratitudes">Special thanks for the support to the coffee creators</string>
+</resources>

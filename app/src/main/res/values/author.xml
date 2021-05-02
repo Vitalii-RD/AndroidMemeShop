@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_author_title">About the author</string>
+    <string name="about_author">A few words about the Author/Developer</string>
+    <string name="about_author_text">My name is Vitalii Dudnyk. That is all about me)</string>
+</resources>
