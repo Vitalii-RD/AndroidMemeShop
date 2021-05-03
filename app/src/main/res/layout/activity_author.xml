@@ -8,6 +8,7 @@
     tools:context=".AuthorActivity">
 
     <include layout="@layout/toolbar"
+        android:id="@+id/author_toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 

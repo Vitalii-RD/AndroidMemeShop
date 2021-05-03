@@ -6,18 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dudnyk.projectwithmaterialdesign.adapters.CategoryAdapter
 import com.dudnyk.projectwithmaterialdesign.adapters.OnItemClickListener
 import com.dudnyk.projectwithmaterialdesign.data.Category
+import com.dudnyk.projectwithmaterialdesign.databinding.FragmentCategoriesBinding
 import com.google.android.material.appbar.MaterialToolbar
 
 
 class CategoryListFragment : Fragment() {
-    protected lateinit var rootView: View
-    lateinit var toolbar: MaterialToolbar
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter: CategoryAdapter
+    private lateinit var categoryBinding: FragmentCategoriesBinding
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var adapter: CategoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +24,10 @@ class CategoryListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_categories, container, false)
+        categoryBinding = FragmentCategoriesBinding.inflate(inflater, container, false)
         initView()
         setUpToolBar(R.string.categories_title)
-        return rootView
+        return categoryBinding.root
     }
 
     companion object {
@@ -56,9 +55,8 @@ class CategoryListFragment : Fragment() {
     }
 
     private fun initializeRecyclerView() {
-        recyclerView = rootView.findViewById(R.id.category_list)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
+        categoryBinding.categoryList.layoutManager = LinearLayoutManager(activity)
+        categoryBinding.categoryList.adapter = adapter
     }
 
     private fun setUpAdapter() {

@@ -8,6 +8,7 @@
     tools:context=".LoginActivity">
 
     <include layout="@layout/toolbar"
+        android:id="@+id/login_toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 

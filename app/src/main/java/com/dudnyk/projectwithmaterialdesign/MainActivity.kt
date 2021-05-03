@@ -4,22 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.fragment.app.FragmentManager
+import com.dudnyk.projectwithmaterialdesign.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var mainBinding: ActivityMainBinding
     private lateinit var toolbar: MaterialToolbar
-    private lateinit var fab : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
+        setContentView(mainBinding.root)
         setUpToolBar()
         setUpFab()
 
@@ -38,13 +37,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpToolBar() {
-        toolbar = findViewById(R.id.my_toolbar)
+        toolbar = mainBinding.mainToolbar.myToolbar
         setSupportActionBar(toolbar)
     }
 
     private fun setUpFab() {
-        fab = findViewById(R.id.fab)
-        fab.setOnClickListener {
+        mainBinding.fab.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }

@@ -2,25 +2,26 @@ package com.dudnyk.projectwithmaterialdesign
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.material.appbar.MaterialToolbar
+import com.dudnyk.projectwithmaterialdesign.databinding.ActivityAppBinding
 
 class AppActivity : AppCompatActivity() {
-    private lateinit var topAppBar: MaterialToolbar
+    private lateinit var appBinding: ActivityAppBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app)
+        appBinding = ActivityAppBinding.inflate(layoutInflater)
+        setContentView(appBinding.root)
         setUpToolBar(R.string.about_app_title)
     }
 
     private fun setUpToolBar(title: Int) {
-        topAppBar = findViewById(R.id.my_toolbar)
-        setSupportActionBar(topAppBar)
+        val toolbar = appBinding.appToolbar.myToolbar
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        topAppBar.setTitle(title)
-        topAppBar.setNavigationOnClickListener {
+        toolbar.setTitle(title)
+        toolbar.setNavigationOnClickListener {
             finish()
         }
     }

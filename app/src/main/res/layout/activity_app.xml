@@ -8,6 +8,7 @@
     tools:context=".AppActivity">
 
     <include layout="@layout/toolbar"
+        android:id="@+id/app_toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 

@@ -2,10 +2,10 @@ package com.dudnyk.projectwithmaterialdesign
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.appbar.MaterialToolbar
+import com.dudnyk.projectwithmaterialdesign.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var topAppBar: MaterialToolbar
+    private lateinit var loginBinding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
@@ -16,12 +16,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUpToolBar(title: Int) {
-        topAppBar = findViewById(R.id.my_toolbar)
-        setSupportActionBar(topAppBar)
+        val toolbar = loginBinding.loginToolbar.myToolbar
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        topAppBar.setTitle(title)
-        topAppBar.setNavigationOnClickListener {
+        toolbar.setTitle(title)
+        toolbar.setNavigationOnClickListener {
             finish()
         }
     }
