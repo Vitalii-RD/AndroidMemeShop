@@ -1,20 +1,19 @@
 package com.dudnyk.projectwithmaterialdesign.adapters
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.dudnyk.projectwithmaterialdesign.R
 import com.dudnyk.projectwithmaterialdesign.data.Product
-import com.dudnyk.projectwithmaterialdesign.inflate
+import com.dudnyk.projectwithmaterialdesign.databinding.ProductItemBinding
 
 class ProductAdapter: BaseRecyclerViewAdapter<Product>() {
+    private lateinit var productBinding: ProductItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflatedView = parent.inflate(R.layout.product_item, false)
-        return ProductHolder(inflatedView)
+        productBinding = ProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ProductHolder(productBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -25,12 +24,11 @@ class ProductAdapter: BaseRecyclerViewAdapter<Product>() {
         }
     }
 
-    inner class ProductHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        private var view: View = v
+    inner class ProductHolder(var binding: ProductItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private var product: Product? = null
 
         init {
-            v.setOnClickListener(this)
+            binding.root.setOnClickListener(this)
         }
 
         override fun onClick(v: View) {
@@ -39,9 +37,9 @@ class ProductAdapter: BaseRecyclerViewAdapter<Product>() {
 
         fun setUpView(product: Product) {
             this.product = product
-            view.findViewById<TextView>(R.id.product_name).text = product.name
-            view.findViewById<ImageView>(R.id.product_img).setImageDrawable(ContextCompat.getDrawable(view.context, product.link))
-            view.findViewById<TextView>(R.id.product_price).text = "${product.price}$"
+            binding.productName.text = product.name
+            binding.productImg.setImageDrawable(ContextCompat.getDrawable(productBinding.root.context, product.resId))
+            binding.productPrice.text = product.getFormattedPrice()
         }
     }
 }

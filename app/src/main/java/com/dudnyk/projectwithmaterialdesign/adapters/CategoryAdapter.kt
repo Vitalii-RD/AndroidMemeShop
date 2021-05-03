@@ -1,18 +1,18 @@
 package com.dudnyk.projectwithmaterialdesign.adapters
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.dudnyk.projectwithmaterialdesign.R
 import com.dudnyk.projectwithmaterialdesign.data.Category
-import com.dudnyk.projectwithmaterialdesign.inflate
+import com.dudnyk.projectwithmaterialdesign.databinding.CategotyItemBinding
 
 class CategoryAdapter: BaseRecyclerViewAdapter<Category>() {
+    private lateinit var categoryBinding: CategotyItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflatedView = parent.inflate(R.layout.categoty_item, false)
-        return CategoryHolder(inflatedView)
+        categoryBinding =  CategotyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CategoryHolder(categoryBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -23,12 +23,11 @@ class CategoryAdapter: BaseRecyclerViewAdapter<Category>() {
         }
     }
 
-    inner class CategoryHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        private var view: View = v
+    inner class CategoryHolder(var binding: CategotyItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private var category: Category? = null
 
         init {
-            v.setOnClickListener(this)
+            binding.root.setOnClickListener(this)
         }
 
         override fun onClick(v: View) {
@@ -37,7 +36,7 @@ class CategoryAdapter: BaseRecyclerViewAdapter<Category>() {
 
         fun setUpView(category: Category) {
             this.category = category
-            view.findViewById<TextView>(R.id.category_name).text = category.title
+            binding.categoryName.text = category.title
         }
     }
 }
