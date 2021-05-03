@@ -64,7 +64,7 @@ class CategoryListFragment : Fragment() {
             override fun onItemClick(position: Int, view: View?) {
                 val category = adapter.getItem(position)
                 fragmentManager?.beginTransaction()?.apply {
-                    replace(R.id.shopping_fragments, ProductListFragment.newInstance(category), ProductListFragment.TAG)
+                    replace(R.id.fragment_container, ProductListFragment.newInstance(category), ProductListFragment.TAG)
                     addToBackStack(ProductListFragment.TAG)
                     commit()
                 }
@@ -84,7 +84,18 @@ class CategoryListFragment : Fragment() {
             Category("Technology", null),
             Category("Auction", null),
             Category("Campaign", null),
-            Category("News", null)
+            Category("News", null),
+            Category("Anime", null),
+            Category("Book", null),
+            Category("Cartoon", null),
+            Category("Comic Book", null),
+            Category("Fetish", null),
+            Category("Manga", null),
+            Category("Podcast", null),
+            Category("TV Show", null),
+            Category("Video Game", null),
+            Category("Web Series", null),
+            Category("Webcomic", null)
         ))
     }
 

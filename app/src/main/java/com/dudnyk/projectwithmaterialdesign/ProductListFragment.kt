@@ -70,7 +70,7 @@ class ProductListFragment : Fragment() {
             override fun onItemClick(position: Int, view: View?) {
                 val product = adapter.getItem(position)!!
                 fragmentManager?.beginTransaction()?.apply {
-                    replace(R.id.shopping_fragments, ProductDetailFragment.newInstance(product), ProductDetailFragment.TAG)
+                    replace(R.id.fragment_container, ProductDetailFragment.newInstance(product), ProductDetailFragment.TAG)
                     addToBackStack(ProductDetailFragment.TAG)
                     commit()
                 }

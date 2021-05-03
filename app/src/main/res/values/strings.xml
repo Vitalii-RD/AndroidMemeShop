@@ -4,4 +4,6 @@
     <string name="todo">TO DO</string>
     <string name="all">All</string>
     <string name="addToCart">Add to cart</string>
+    <string name="help">Help</string>
+    <string name="profile">Profile</string>
 </resources>
