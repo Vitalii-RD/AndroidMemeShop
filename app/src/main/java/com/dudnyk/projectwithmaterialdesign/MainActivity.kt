@@ -6,11 +6,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.appbar.MaterialToolbar
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var topAppBar: MaterialToolbar
+    private lateinit var toolbar: MaterialToolbar
     private lateinit var fab : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,11 +22,24 @@ class MainActivity : AppCompatActivity() {
 
         setUpToolBar()
         setUpFab()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.shopping_fragments, CategoryListFragment.newInstance(), CategoryListFragment.TAG)
+            .commit()
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                toolbar.setNavigationOnClickListener{ onBackPressed() }
+            } else {
+                supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+            }
+        }
     }
 
     private fun setUpToolBar() {
-        topAppBar = findViewById(R.id.my_toolbar)
-        setSupportActionBar(topAppBar)
+        toolbar = findViewById(R.id.my_toolbar)
+        setSupportActionBar(toolbar)
     }
 
     private fun setUpFab() {
@@ -63,15 +78,5 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    fun handleCategory(view: View) {
-        val intent = Intent(this, CategoriesActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun handleProducts(view: View) {
-        val intent = Intent(this, ProductsActivity::class.java)
-        startActivity(intent)
     }
 }
