@@ -10,36 +10,38 @@ import com.dudnyk.projectwithmaterialdesign.R
 import com.dudnyk.projectwithmaterialdesign.data.Product
 import com.dudnyk.projectwithmaterialdesign.inflate
 
-class ProductAdapter(private val products: List<Product>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductAdapter: BaseRecyclerViewAdapter<Product>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflatedView = parent.inflate(R.layout.product_item, false)
         return ProductHolder(inflatedView)
     }
 
-    override fun getItemCount(): Int {
-        return products.size
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val product  = products[position]
-        (holder as ProductHolder).bindProduct(product)
-    }
-}
-
-class ProductHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-    private var view: View = v
-    private var product: Product? = null
-
-    init {
-        v.setOnClickListener(this)
+        val myHolder = holder as? ProductHolder
+        val product = getItem(position)
+        product?.apply {
+            myHolder?.setUpView(this)
+        }
     }
 
-    override fun onClick(v: View) {}
+    inner class ProductHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
+        private var view: View = v
+        private var product: Product? = null
 
-    fun bindProduct(product: Product) {
-        this.product = product
-        view.findViewById<TextView>(R.id.product_name).text = product.name
-        view.findViewById<ImageView>(R.id.product_img).setImageDrawable(ContextCompat.getDrawable(view.context, product.link))
-        view.findViewById<TextView>(R.id.product_price).text = "${product.price}$"
+        init {
+            v.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View) {
+            itemClickListener?.onItemClick(adapterPosition, v)
+        }
+
+        fun setUpView(product: Product) {
+            this.product = product
+            view.findViewById<TextView>(R.id.product_name).text = product.name
+            view.findViewById<ImageView>(R.id.product_img).setImageDrawable(ContextCompat.getDrawable(view.context, product.link))
+            view.findViewById<TextView>(R.id.product_price).text = "${product.price}$"
+        }
     }
 }
