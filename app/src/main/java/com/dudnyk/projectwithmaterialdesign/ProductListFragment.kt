@@ -1,7 +1,6 @@
 package com.dudnyk.projectwithmaterialdesign
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -69,10 +68,9 @@ class ProductListFragment : Fragment() {
     private fun setUpAdapter() {
         adapter.setOnItemClickListener(onItemClickListener = object: OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
-                var product = adapter.getItem(position)
-                Log.i("here", "here")
+                val product = adapter.getItem(position)!!
                 fragmentManager?.beginTransaction()?.apply {
-                    replace(R.id.shopping_fragments, ProductDetailFragment.newInstance("", ""), ProductDetailFragment.TAG)
+                    replace(R.id.shopping_fragments, ProductDetailFragment.newInstance(product), ProductDetailFragment.TAG)
                     addToBackStack(ProductDetailFragment.TAG)
                     commit()
                 }
