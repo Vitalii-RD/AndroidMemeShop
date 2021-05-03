@@ -28,18 +28,17 @@ class ProductListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_product_list, container, false)
         initView()
-        setUpToolBar(R.string.products_title)
         return rootView
     }
 
     companion object {
         var TAG = ProductListFragment::class.java.simpleName
-        const val ARG_POSITION: String = "positioin"
+        const val CATEGORY: String = "CATEGORY"
 
-        fun newInstance(): ProductListFragment {
+        fun newInstance(category: Category?): ProductListFragment {
             val fragment = ProductListFragment()
             val args = Bundle()
-            args.putInt(ARG_POSITION, 1)
+            args.putString(CATEGORY, category?.title)
             fragment.arguments = args
             return fragment
         }
@@ -48,11 +47,17 @@ class ProductListFragment : Fragment() {
     private fun onCreateComponent() {
         adapter = ProductAdapter()
         setUpAdapter()
-        setUpDummyData()
+        loadData(arguments?.getString(CATEGORY))
     }
 
     private fun initView() {
         initializeRecyclerView()
+        setUpToolBar(R.string.products_title, arguments?.getString(CATEGORY))
+    }
+
+    private fun setUpToolBar(title: Int, category: String?) {
+        toolbar = activity?.findViewById(R.id.my_toolbar)!!
+        toolbar.setTitle("${resources.getString(title)}: ${category ?: R.string.all}")
     }
 
     private fun initializeRecyclerView() {
@@ -75,17 +80,20 @@ class ProductListFragment : Fragment() {
         })
     }
 
-    private fun setUpDummyData() {
-        adapter.addItems(listOf(
-            Product("Trade Deal meme", 10, R.drawable.trade, Category("news", null)),
-            Product("Cheating meme", 30, R.drawable.cheating, Category("news", null)),
-            Product("Doggo meme", 50, R.drawable.tiktok, Category("animals", null)),
-            Product("Penguin meme", 50, R.drawable.penguin, Category("animals", null))
-        ))
+    private fun loadData(string: String?) {
+        var data = getDummyData()
+        string?.let { category ->
+            data = data.filter { it.hasCategory(category) }
+        }
+        adapter.addItems(data)
     }
 
-    private fun setUpToolBar(title: Int) {
-        toolbar = activity?.findViewById(R.id.my_toolbar)!!
-        toolbar.setTitle(title)
+    private fun getDummyData(): List<Product> {
+        return listOf(
+            Product("Trade Deal meme", 10, R.drawable.trade, listOf(Category("Auction", null))),
+            Product("Cheating meme", 30, R.drawable.cheating, listOf(Category("News", null))),
+            Product("Doggo meme", 50, R.drawable.tiktok, listOf(Category("Animals", null))),
+            Product("Penguin meme", 50, R.drawable.penguin, listOf(Category("Animals", null)))
+        )
     }
 }

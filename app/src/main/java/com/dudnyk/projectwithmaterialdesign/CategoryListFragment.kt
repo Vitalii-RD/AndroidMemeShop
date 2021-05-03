@@ -66,7 +66,7 @@ class CategoryListFragment : Fragment() {
             override fun onItemClick(position: Int, view: View?) {
                 val category = adapter.getItem(position)
                 fragmentManager?.beginTransaction()?.apply {
-                    replace(R.id.shopping_fragments, ProductListFragment.newInstance(), ProductListFragment.TAG)
+                    replace(R.id.shopping_fragments, ProductListFragment.newInstance(category), ProductListFragment.TAG)
                     addToBackStack(ProductListFragment.TAG)
                     commit()
                 }
@@ -76,7 +76,7 @@ class CategoryListFragment : Fragment() {
 
     private fun setUpDummyData() {
         adapter.addItems(listOf(
-            Category("Art", null),
+            Category("Animals", null),
             Category("Country", null),
             Category("Food", null),
             Category("Movement", null),
@@ -85,7 +85,8 @@ class CategoryListFragment : Fragment() {
             Category("Sport", null),
             Category("Technology", null),
             Category("Auction", null),
-            Category("Campaign", null)
+            Category("Campaign", null),
+            Category("News", null)
         ))
     }
 
