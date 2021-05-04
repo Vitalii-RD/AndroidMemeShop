@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="products_title">Products</string>
-    <bool name="two_pane">false</bool>
+    <bool name="two_pane">true</bool>
 </resources>

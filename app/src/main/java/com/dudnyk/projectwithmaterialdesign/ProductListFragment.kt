@@ -69,8 +69,10 @@ class ProductListFragment : Fragment() {
         adapter.setOnItemClickListener(onItemClickListener = object: OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
                 val product = adapter.getItem(position)!!
+                val container = if (context?.resources?.getBoolean(R.bool.two_pane) == true) R.id.product_list_detail else R.id.fragment_container
+
                 fragmentManager?.beginTransaction()?.apply {
-                    replace(R.id.fragment_container, ProductDetailFragment.newInstance(product), ProductDetailFragment.TAG)
+                    replace(container, ProductDetailFragment.newInstance(product), ProductDetailFragment.TAG)
                     addToBackStack(ProductDetailFragment.TAG)
                     commit()
                 }
