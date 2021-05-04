@@ -1,6 +1,8 @@
 package com.dudnyk.projectwithmaterialdesign
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +15,7 @@ import com.google.android.material.appbar.MaterialToolbar
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var toolbar: MaterialToolbar
+    private  lateinit var sp: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
@@ -20,11 +23,16 @@ class MainActivity : AppCompatActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mainBinding.root)
-        setUpFragment()
+        initObjects()
         setUpToolBar()
-        setUpFab()
-        startShopFragments()
         setUpBottomNavigation()
+        setUpFragment()
+        setUpFab()
+    }
+
+    private fun initObjects() {
+        toolbar = mainBinding.mainToolbar.myToolbar
+        sp = getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)
     }
 
     companion object{
@@ -46,15 +54,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpToolBar() {
-        toolbar = mainBinding.mainToolbar.myToolbar
         setSupportActionBar(toolbar)
     }
 
     private fun setUpFab() {
         mainBinding.fab.setOnClickListener {
+            logOut()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        if (isLoggedIn()) {
+            mainBinding.fab.hide()
+        }
+    }
+
+    fun isLoggedIn(): Boolean {
+        return sp.getInt(RegisterActivity.USER_ID, -1) != -1
+    }
+
+    fun logOut() {
+        sp.edit().remove(RegisterActivity.USER_ID).apply()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

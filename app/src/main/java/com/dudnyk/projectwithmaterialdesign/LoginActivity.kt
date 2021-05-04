@@ -105,4 +105,5 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         loginBinding.inputEmail.text = null
         loginBinding.inputPassword.text = null
     }
+
 }

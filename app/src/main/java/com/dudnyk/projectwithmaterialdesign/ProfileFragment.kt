@@ -1,17 +1,17 @@
 package com.dudnyk.projectwithmaterialdesign
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import com.dudnyk.projectwithmaterialdesign.data.User
 import com.dudnyk.projectwithmaterialdesign.databinding.FragmentProfileBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProfileFragment : Fragment() {
     private lateinit var profileBinding: FragmentProfileBinding
@@ -19,6 +19,7 @@ class ProfileFragment : Fragment() {
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var user: User
     private lateinit var sp: SharedPreferences
+    private lateinit var fab: FloatingActionButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -26,13 +27,32 @@ class ProfileFragment : Fragment() {
         setUpToolBar(R.string.profile)
         initObjects()
         initView()
+
         return profileBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fab = activity?.findViewById(R.id.fab)!!
+        fab.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (isLoggedIn()) {
+            fab.hide()
+        }
+    }
+
+    fun isLoggedIn(): Boolean {
+        return sp.getInt(RegisterActivity.USER_ID, -1) != -1
     }
 
     companion object {
         const val USER = "USER"
         fun newInstance() = ProfileFragment()
     }
+
 
     private fun setUpToolBar(title: Int) {
         toolbar = activity?.findViewById(R.id.my_toolbar)!!
@@ -52,4 +72,5 @@ class ProfileFragment : Fragment() {
         profileBinding.profileName.text = user.name
         profileBinding.profileEmail.text = user.email
     }
+
 }
