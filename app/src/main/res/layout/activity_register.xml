@@ -6,14 +6,15 @@
     android:orientation="vertical">
 
     <include layout="@layout/toolbar"
-        android:id="@+id/login_toolbar"
+        android:id="@+id/register_toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/login_NestedScrollView"
+        android:id="@+id/register_NestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="20dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -21,52 +22,84 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_email"
+                android:id="@+id/inputLayoutName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_email"
+                    android:id="@+id/input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/hint_name"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@android:color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_password"
+                android:id="@+id/inputLayoutEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_password"
+                    android:id="@+id/inputEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/hint_email"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_confirm_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:textColor="@android:color/white" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/appCompatButtonLogin"
+                android:id="@+id/buttonRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/action_sign_in" />
+                android:text="@string/register_title" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewLinkRegister"
+                android:id="@+id/loginLink"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:text="@string/createAccount"
-                android:textSize="16sp" />
-
+                android:text="Already a member? Login"
+                android:textSize="16dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
