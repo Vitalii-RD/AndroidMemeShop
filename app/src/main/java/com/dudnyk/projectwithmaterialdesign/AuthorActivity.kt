@@ -11,7 +11,7 @@ class AuthorActivity : AppCompatActivity() {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
         super.onCreate(savedInstanceState)
         authorBinding = ActivityAuthorBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_author)
+        setContentView(authorBinding.root)
         setUpToolBar(R.string.about_author_title)
     }
 
