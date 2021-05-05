@@ -1,4 +1,4 @@
-package com.dudnyk.projectwithmaterialdesign.data
+package com.dudnyk.projectwithmaterialdesign.Data
 
 import android.os.Parcel
 import android.os.Parcelable

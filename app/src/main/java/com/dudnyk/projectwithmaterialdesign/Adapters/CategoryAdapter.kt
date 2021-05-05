@@ -1,10 +1,10 @@
-package com.dudnyk.projectwithmaterialdesign.adapters
+package com.dudnyk.projectwithmaterialdesign.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dudnyk.projectwithmaterialdesign.data.Category
+import com.dudnyk.projectwithmaterialdesign.Data.Category
 import com.dudnyk.projectwithmaterialdesign.databinding.CategotyItemBinding
 
 class CategoryAdapter: BaseRecyclerViewAdapter<Category>() {

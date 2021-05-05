@@ -1,11 +1,11 @@
-package com.dudnyk.projectwithmaterialdesign.adapters
+package com.dudnyk.projectwithmaterialdesign.Adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.dudnyk.projectwithmaterialdesign.data.Product
+import com.dudnyk.projectwithmaterialdesign.Data.Product
 import com.dudnyk.projectwithmaterialdesign.databinding.ProductItemBinding
 
 class ProductAdapter: BaseRecyclerViewAdapter<Product>() {

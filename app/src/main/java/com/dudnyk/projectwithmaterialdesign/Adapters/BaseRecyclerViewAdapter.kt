@@ -1,9 +1,8 @@
-package com.dudnyk.projectwithmaterialdesign.adapters
+package com.dudnyk.projectwithmaterialdesign.Adapters
 
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 
 

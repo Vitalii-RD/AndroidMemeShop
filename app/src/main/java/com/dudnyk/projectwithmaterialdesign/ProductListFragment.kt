@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dudnyk.projectwithmaterialdesign.adapters.OnItemClickListener
-import com.dudnyk.projectwithmaterialdesign.adapters.ProductAdapter
-import com.dudnyk.projectwithmaterialdesign.data.Category
-import com.dudnyk.projectwithmaterialdesign.data.Product
+import com.dudnyk.projectwithmaterialdesign.Adapters.OnItemClickListener
+import com.dudnyk.projectwithmaterialdesign.Adapters.ProductAdapter
+import com.dudnyk.projectwithmaterialdesign.Data.Category
+import com.dudnyk.projectwithmaterialdesign.Data.Product
 import com.google.android.material.appbar.MaterialToolbar
 
 class ProductListFragment : Fragment() {

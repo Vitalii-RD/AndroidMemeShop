@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dudnyk.projectwithmaterialdesign.adapters.CategoryAdapter
-import com.dudnyk.projectwithmaterialdesign.adapters.OnItemClickListener
-import com.dudnyk.projectwithmaterialdesign.data.Category
+import com.dudnyk.projectwithmaterialdesign.Adapters.CategoryAdapter
+import com.dudnyk.projectwithmaterialdesign.Adapters.OnItemClickListener
+import com.dudnyk.projectwithmaterialdesign.Data.Category
 import com.dudnyk.projectwithmaterialdesign.databinding.FragmentCategoriesBinding
 import com.google.android.material.appbar.MaterialToolbar
 

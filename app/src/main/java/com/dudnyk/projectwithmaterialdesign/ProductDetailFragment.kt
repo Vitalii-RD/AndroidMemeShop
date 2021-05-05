@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import com.dudnyk.projectwithmaterialdesign.data.Product
+import com.dudnyk.projectwithmaterialdesign.Data.Product
 import com.dudnyk.projectwithmaterialdesign.databinding.FragmentProductDetailBinding
 import com.google.android.material.appbar.MaterialToolbar
 

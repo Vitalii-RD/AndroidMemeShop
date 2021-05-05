@@ -8,7 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.dudnyk.projectwithmaterialdesign.Helpers.InputValidation
 import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
-import com.dudnyk.projectwithmaterialdesign.data.User
+import com.dudnyk.projectwithmaterialdesign.Data.User
 import com.dudnyk.projectwithmaterialdesign.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 
