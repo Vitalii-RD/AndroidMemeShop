@@ -62,12 +62,12 @@ class ProfileFragment : Fragment() {
         databaseHelper = DatabaseHelper(profileBinding.root.context)
         sp = activity?.getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)!!
         user = databaseHelper.getUser(sp.getInt(RegisterActivity.USER_ID, -1))
-                ?: User(-1, "unknown", "unknown", "unknown")
+                ?: User(-1, "Who am I?", "who@am.i", "whoami", R.drawable.unknown_user)
     }
 
     private fun initView() {
         //TODO set user image
-        profileBinding.profileImg.setImageDrawable(ContextCompat.getDrawable(profileBinding.root.context, R.drawable.unknown_user))
+        profileBinding.profileImg.setImageDrawable(ContextCompat.getDrawable(profileBinding.root.context, user.resId ?: R.drawable.unknown_user))
         profileBinding.profileName.text = user.name
         profileBinding.profileEmail.text = user.email
     }

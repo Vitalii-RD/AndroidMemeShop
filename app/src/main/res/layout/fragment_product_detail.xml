@@ -22,7 +22,6 @@
                 android:layout_gravity="top"
                 android:maxHeight="300dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/author"
                 android:adjustViewBounds="true"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
