@@ -75,28 +75,11 @@ class CategoryListFragment : Fragment() {
 
     private fun setUpDummyData() {
         adapter.addItems(listOf(
-            Category("Animals", null),
-            Category("Country", null),
-            Category("Food", null),
-            Category("Movement", null),
-            Category("Music", null),
-            Category("Religion", null),
-            Category("Sport", null),
-            Category("Technology", null),
-            Category("Auction", null),
-            Category("Campaign", null),
-            Category("News", null),
-            Category("Anime", null),
-            Category("Book", null),
-            Category("Cartoon", null),
-            Category("Comic Book", null),
-            Category("Fetish", null),
-            Category("Manga", null),
-            Category("Podcast", null),
-            Category("TV Show", null),
-            Category("Video Game", null),
-            Category("Web Series", null),
-            Category("Webcomic", null)
+            Category("White Vinyl Stickers & Labels", null),
+            Category("Sticker and Label Sheets", null),
+            Category("Clear Vinyl Stickers & Labels", null),
+            Category("Premium Kids’ Labels", null),
+            Category("Permanent & Stick-On Clothing Tag Labels", null)
         ))
     }
 

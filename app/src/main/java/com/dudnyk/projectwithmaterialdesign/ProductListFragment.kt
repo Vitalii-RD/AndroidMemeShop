@@ -90,10 +90,10 @@ class ProductListFragment : Fragment() {
 
     private fun getDummyData(): List<Product> {
         return listOf(
-            Product("Trade Deal meme", 10, R.drawable.trade, listOf(Category("Auction", null))),
-            Product("Cheating meme", 30, R.drawable.cheating, listOf(Category("News", null))),
-            Product("Doggo meme", 50, R.drawable.tiktok, listOf(Category("Animals", null))),
-            Product("Penguin meme", 50, R.drawable.penguin, listOf(Category("Animals", null)))
+            Product("Clear sticker with name", 6, R.drawable.name_clear_sticker, listOf(Category("Clear Vinyl Stickers & Labels", null))),
+            Product("Fox stick-on clothing label", 7, R.drawable.fox_stick_on_clothing_label, listOf(Category("Permanent & Stick-On Clothing Tag Labels", null))),
+            Product("Minimalistic die cut sticker", 8, R.drawable.minimalistic_die_cut_sticker, listOf(Category("White Vinyl Stickers & Labels    ", null))),
+            Product("Simple sticker pack", 10, R.drawable.sticker_pack, listOf(Category("Sticker and Label Sheets", null)))
         )
     }
 }

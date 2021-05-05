@@ -13,16 +13,4 @@
         android:icon="@drawable/ic_info_24"
         android:title="@string/about_app"
         />
-    <item
-        android:id="@+id/menu_actions"
-        app:showAsAction="always"
-        android:title="@string/menu_actions"
-        android:icon="@drawable/ic_dots_24"
-        android:contentDescription="@string/menu_actions">
-        <menu>
-            <item android:title="@string/todo"/>
-            <item android:title="@string/todo"/>
-            <item android:title="@string/todo"/>
-        </menu>
-    </item>
 </menu>

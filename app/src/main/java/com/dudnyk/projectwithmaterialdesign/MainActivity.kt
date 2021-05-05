@@ -79,16 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.about_app -> {
-                startActivity(Intent(this, AppActivity::class.java))
-                true
-            }
             R.id.about_author -> {
                 startActivity(Intent(this, AuthorActivity::class.java))
-                true
-            }
-            R.id.menu_actions -> {
-                //TODO SOME MENU OPTIONS
                 true
             }
             else -> super.onOptionsItemSelected(item)
