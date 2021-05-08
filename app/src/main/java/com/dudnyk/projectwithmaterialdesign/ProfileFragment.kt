@@ -3,6 +3,7 @@ package com.dudnyk.projectwithmaterialdesign
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
@@ -69,6 +70,7 @@ class ProfileFragment : Fragment() {
     private fun initObjects() {
         databaseHelper = DatabaseHelper(profileBinding.root.context)
         sp = activity?.getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)!!
+        Log.i("REGISTRATION","USER_ID" + sp.getInt(RegisterActivity.USER_ID, -1).toString())
         user = databaseHelper.getUser(sp.getInt(RegisterActivity.USER_ID, -1))
                 ?: User(-1, "Who am I?", "who@am.i", "whoami", R.drawable.unknown_user)
     }

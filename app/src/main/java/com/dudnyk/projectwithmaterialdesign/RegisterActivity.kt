@@ -60,11 +60,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.buttonRegister -> {
-                val user = postDataToSQLite()
-                user?.let { showProfile(it) }
-            }
+            R.id.buttonRegister -> registerNewUser()
             R.id.loginLink -> finish()
+        }
+    }
+
+    private fun registerNewUser() {
+        val user = postDataToSQLite()
+        user?.let {
+            setCurrentUser(user)
+            Snackbar.make(registerBinding.registerNestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show()
+            emptyInputEditText()
+            showProfile()
         }
     }
 
@@ -78,10 +85,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
             name = registerBinding.inputName.text.toString().trim(),
             email = registerBinding.inputEmail.text.toString().trim(),
             password = registerBinding.inputPassword.text.toString().trim()
-        )
-        databaseHelper.addUser(user)
-        Snackbar.make(registerBinding.registerNestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show()
-        emptyInputEditText()
+        ).also {
+            val userId = databaseHelper.addUser(it)
+            it.id = userId
+        }
+
         return user
     }
 
@@ -117,13 +125,14 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
         return true
     }
 
-    private fun showProfile(user: User) {
+    private fun showProfile() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(MainActivity.FRAGMENT, MainActivity.FRAGMENT_PROFILE)
+        startActivity(intent)
+    }
 
+    private fun setCurrentUser(user: User) {
         sp.edit().putInt(USER_ID, user.id).apply()
         sp.edit().putString(USER_NAME, user.name).apply()
-
-        startActivity(intent)
     }
 }

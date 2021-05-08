@@ -61,16 +61,19 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return userList
     }
 
-    fun addUser(user: User) {
+    fun addUser(user: User) : Int{
+        val userId: Int
         val db = this.writableDatabase
-
         val values = ContentValues()
+
         values.put(COLUMN_USER_NAME, user.name)
         values.put(COLUMN_USER_EMAIL, user.email)
         values.put(COLUMN_USER_PASSWORD, user.password)
 
-        db.insert(TABLE_USERS, null, values)
+        userId = db.insert(TABLE_USERS, null, values).toInt()
         db.close()
+
+        return userId
     }
 
     fun updateUser(user: User) {

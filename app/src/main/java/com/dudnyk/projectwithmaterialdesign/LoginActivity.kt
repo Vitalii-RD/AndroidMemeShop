@@ -46,9 +46,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initObjects() {
+        sp = getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)
         databaseHelper = DatabaseHelper(this)
         inputValidation = InputValidation(this)
-        sp = getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)
     }
 
     override fun onClick(view: View) {
@@ -61,7 +61,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             }
-
             R.id.textViewLinkRegister -> startActivity(Intent(applicationContext, RegisterActivity::class.java))
         }
     }

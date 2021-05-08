@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.dudnyk.projectwithmaterialdesign.R
 
-data class User(val id: Int = -1, val name: String, val email: String, val password: String, var resId: Int? = R.drawable.known_user): Parcelable {
+data class User(var id: Int = -1, val name: String, val email: String, val password: String, var resId: Int? = R.drawable.known_user): Parcelable {
     constructor(parcel: Parcel) : this(parcel.readInt(), parcel.readString() ?: "", parcel.readString() ?: "", parcel.readString() ?: "", parcel.readInt())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
