@@ -1,14 +1,13 @@
 package com.dudnyk.projectwithmaterialdesign
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.dudnyk.projectwithmaterialdesign.Helpers.InputValidation
-import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import com.dudnyk.projectwithmaterialdesign.Data.User
+import com.dudnyk.projectwithmaterialdesign.Helpers.InputValidation
+import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
+import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import com.dudnyk.projectwithmaterialdesign.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -16,7 +15,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var inputValidation: InputValidation
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var loginBinding: ActivityLoginBinding
-    private lateinit var sp : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
@@ -46,22 +44,28 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initObjects() {
-        sp = getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)
         databaseHelper = DatabaseHelper(this)
         inputValidation = InputValidation(this)
     }
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.appCompatButtonLogin -> {
-                if (verifyFromSQLite()) {
-                    getUser()?.let {
-                        emptyInputEditText()
-                        showProfile(it)
-                    }
-                }
+            R.id.appCompatButtonLogin -> login()
+            R.id.textViewLinkRegister -> register()
+        }
+    }
+
+    private fun register() {
+        startActivity(Intent(applicationContext, RegisterActivity::class.java))
+    }
+
+    private fun login() {
+        if (verifyFromSQLite()) {
+            getUser()?.let {
+                UserPreferences(this).setCurrentUser(it)
+                emptyInputEditText()
+                showProfile()
             }
-            R.id.textViewLinkRegister -> startActivity(Intent(applicationContext, RegisterActivity::class.java))
         }
     }
 
@@ -90,13 +94,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
-    private fun showProfile(user: User) {
+    private fun showProfile() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(MainActivity.FRAGMENT, MainActivity.FRAGMENT_PROFILE)
-
-        sp.edit().putInt(RegisterActivity.USER_ID, user.id).apply()
-        sp.edit().putString(RegisterActivity.USER_NAME, user.name).apply()
-
         startActivity(intent)
     }
 
@@ -104,5 +104,4 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         loginBinding.inputEmail.text = null
         loginBinding.inputPassword.text = null
     }
-
 }

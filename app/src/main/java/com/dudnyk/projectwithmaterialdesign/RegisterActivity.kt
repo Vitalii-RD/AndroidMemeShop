@@ -1,23 +1,20 @@
 package com.dudnyk.projectwithmaterialdesign
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.dudnyk.projectwithmaterialdesign.Helpers.InputValidation
-import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import com.dudnyk.projectwithmaterialdesign.Data.User
+import com.dudnyk.projectwithmaterialdesign.Helpers.InputValidation
+import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
+import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import com.dudnyk.projectwithmaterialdesign.databinding.ActivityRegisterBinding
 import com.google.android.material.snackbar.Snackbar
-
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
     private lateinit var inputValidation: InputValidation
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var registerBinding: ActivityRegisterBinding
-    private lateinit var sp: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
@@ -30,11 +27,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
         initObjects()
     }
 
-    companion object{
-        const val LOGIN = "LOGIN"
-        const val USER_ID = "USER_ID"
-        const val USER_NAME = "USER_NAME"
-    }
 
     private fun setUpToolBar(title: Int) {
         val toolbar = registerBinding.registerToolbar.myToolbar
@@ -53,7 +45,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
     private fun initObjects() {
-        sp = getSharedPreferences(LOGIN, Context.MODE_PRIVATE)
         inputValidation = InputValidation(this)
         databaseHelper = DatabaseHelper(this)
     }
@@ -61,14 +52,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.buttonRegister -> registerNewUser()
-            R.id.loginLink -> finish()
+            R.id.loginLink -> login()
         }
+    }
+
+    private fun login() {
+        finish()
     }
 
     private fun registerNewUser() {
         val user = postDataToSQLite()
         user?.let {
-            setCurrentUser(user)
+            UserPreferences(this).setCurrentUser(it)
             Snackbar.make(registerBinding.registerNestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show()
             emptyInputEditText()
             showProfile()
@@ -129,10 +124,5 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(MainActivity.FRAGMENT, MainActivity.FRAGMENT_PROFILE)
         startActivity(intent)
-    }
-
-    private fun setCurrentUser(user: User) {
-        sp.edit().putInt(USER_ID, user.id).apply()
-        sp.edit().putString(USER_NAME, user.name).apply()
     }
 }

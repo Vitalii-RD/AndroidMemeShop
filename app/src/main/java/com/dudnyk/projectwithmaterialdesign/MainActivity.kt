@@ -1,21 +1,19 @@
 package com.dudnyk.projectwithmaterialdesign
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
 import com.dudnyk.projectwithmaterialdesign.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var toolbar: MaterialToolbar
-    private  lateinit var sp: SharedPreferences
+    private  lateinit var userPreferences: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
@@ -43,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObjects() {
         toolbar = mainBinding.mainToolbar.myToolbar
-        sp = getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)
+        userPreferences = UserPreferences(this)
     }
 
     private fun setUpFragment() {
@@ -59,22 +57,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpFab() {
         mainBinding.fab.setOnClickListener {
-            logOut()
+            userPreferences.logOut()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
-        if (isLoggedIn()) {
+        if (userPreferences.isLoggedIn()) {
             mainBinding.fab.hide()
         }
-    }
-
-    fun isLoggedIn(): Boolean {
-        return sp.getInt(RegisterActivity.USER_ID, -1) != -1
-    }
-
-    fun logOut() {
-        sp.edit().remove(RegisterActivity.USER_ID).apply()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,14 +1,14 @@
 package com.dudnyk.projectwithmaterialdesign
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
+import androidx.fragment.app.Fragment
 import com.dudnyk.projectwithmaterialdesign.Data.User
+import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
+import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import com.dudnyk.projectwithmaterialdesign.databinding.FragmentProfileBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,8 +18,8 @@ class ProfileFragment : Fragment() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var user: User
-    private lateinit var sp: SharedPreferences
     private lateinit var fab: FloatingActionButton
+    private lateinit var userPreferences: UserPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,17 +47,12 @@ class ProfileFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (isLoggedIn()) {
+        if (userPreferences.isLoggedIn()) {
             fab.hide()
         }
     }
 
-    fun isLoggedIn(): Boolean {
-        return sp.getInt(RegisterActivity.USER_ID, -1) != -1
-    }
-
     companion object {
-        const val USER = "USER"
         fun newInstance() = ProfileFragment()
     }
 
@@ -68,10 +63,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initObjects() {
+        userPreferences = this.context?.let { UserPreferences(it) }!!
         databaseHelper = DatabaseHelper(profileBinding.root.context)
-        sp = activity?.getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)!!
-        Log.i("REGISTRATION","USER_ID" + sp.getInt(RegisterActivity.USER_ID, -1).toString())
-        user = databaseHelper.getUser(sp.getInt(RegisterActivity.USER_ID, -1))
+        //TODO change logic to either:
+        // - redirecting to login activity instead of showing a fake account
+        // - showing another fragment with "Log in" message
+        user = databaseHelper.getUser(userPreferences.getIntPreference(UserPreferences.USER_ID))
                 ?: User(-1, "Who am I?", "who@am.i", "whoami", R.drawable.unknown_user)
     }
 
@@ -81,5 +78,4 @@ class ProfileFragment : Fragment() {
         profileBinding.profileName.text = user.name
         profileBinding.profileEmail.text = user.email
     }
-
 }
