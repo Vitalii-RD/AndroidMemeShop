@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
 import com.dudnyk.projectwithmaterialdesign.databinding.ActivityMainBinding
 import com.google.android.material.appbar.MaterialToolbar
@@ -24,14 +25,15 @@ class MainActivity : AppCompatActivity() {
         initObjects()
         setUpToolBar()
         setUpBottomNavigation()
-        setUpFragment()
+        setUpFragmentManager()
         setUpFab()
+
+        startShopFragments()
     }
 
     companion object{
         const val FRAGMENT = "FRAGMENT"
-        const val FRAGMENT_PROFILE  = "FRAGMENT_PROFILE"
-        const val FRAGMENT_CATEGORY = "FRAGMENT_CATEGORY"
+        val FRAGMENTS_WITHOUT_BACK_BUTTON = listOf(CategoryListFragment.TAG, ProfileFragment.TAG)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -44,10 +46,14 @@ class MainActivity : AppCompatActivity() {
         userPreferences = UserPreferences(this)
     }
 
-    private fun setUpFragment() {
-        when(intent.getStringExtra(FRAGMENT)) {
-            FRAGMENT_PROFILE -> mainBinding.bottomNavigation.selectedItemId = R.id.b_nav_profile
-            else -> mainBinding.bottomNavigation.selectedItemId = R.id.b_nav_categories
+    private fun setUpFragmentManager() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                toolbar.setNavigationOnClickListener{ onBackPressed() }
+            } else {
+                supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+            }
         }
     }
 
@@ -99,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.b_nav_profile -> {
-                    startProfilefragment()
+                    startProfileFragment()
                     return@setOnNavigationItemSelectedListener true
                 }
             }
@@ -107,6 +113,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun startProfileFragment() {
+        toolbar.setTitle(R.string.profile)
+        loadFragment(ProfileFragment.newInstance(), ProfileFragment.TAG)
+    }
+
+    private fun startShopFragments() {
+        toolbar.setTitle(R.string.categories_title)
+        loadFragment(CategoryListFragment.newInstance(), CategoryListFragment.TAG)
+    }
 
     private fun startHelpFragment() {
         toolbar.title = resources.getString(R.string.help)
@@ -114,32 +129,16 @@ class MainActivity : AppCompatActivity() {
         // loadFragment()
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(fragment::class.java.simpleName)
-        transaction.commit()
-    }
+    private fun loadFragment(fragment: Fragment, fragment_name : String) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, fragment, fragment_name)
 
-    private fun startProfilefragment() {
-        toolbar.title = resources.getString(R.string.profile)
-        loadFragment(ProfileFragment.newInstance())
-    }
+            if (!FRAGMENTS_WITHOUT_BACK_BUTTON.contains(fragment_name))
+                addToBackStack(fragment_name)
+            else
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
-    private fun startShopFragments() {
-        toolbar.title = resources.getString(R.string.categories_title)
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, CategoryListFragment.newInstance(), CategoryListFragment.TAG)
-            .commit()
-
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount > 0) {
-                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                toolbar.setNavigationOnClickListener{ onBackPressed() }
-            } else {
-                supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-            }
+            commit()
         }
     }
 }

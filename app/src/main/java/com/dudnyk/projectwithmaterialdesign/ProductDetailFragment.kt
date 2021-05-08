@@ -28,8 +28,8 @@ class ProductDetailFragment : Fragment() {
     }
 
     companion object {
-        val TAG =  ProductDetailFragment::class.java.simpleName
-        val PRODUCT: String? = "PRODUCT"
+        const val TAG = "FRAGMENT_PRODUCT_DETAIL"
+        const val PRODUCT: String = "PRODUCT"
 
         fun newInstance(product: Product) =
             ProductDetailFragment().apply {

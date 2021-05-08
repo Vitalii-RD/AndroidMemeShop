@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showProfile() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra(MainActivity.FRAGMENT, MainActivity.FRAGMENT_PROFILE)
+        intent.putExtra(MainActivity.FRAGMENT, ProfileFragment.TAG)
         startActivity(intent)
     }
 

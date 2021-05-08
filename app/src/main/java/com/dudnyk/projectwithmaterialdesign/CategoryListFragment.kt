@@ -13,7 +13,6 @@ import com.dudnyk.projectwithmaterialdesign.Data.Category
 import com.dudnyk.projectwithmaterialdesign.databinding.FragmentCategoriesBinding
 import com.google.android.material.appbar.MaterialToolbar
 
-
 class CategoryListFragment : Fragment() {
     private lateinit var categoryBinding: FragmentCategoriesBinding
     private lateinit var toolbar: MaterialToolbar
@@ -32,15 +31,10 @@ class CategoryListFragment : Fragment() {
     }
 
     companion object {
-        var TAG = CategoryListFragment::class.java.simpleName
-        const val ARG_POSITION: String = "positioin"
+        const val TAG = "FRAGMENT_CATEGORY"
 
         fun newInstance(): CategoryListFragment {
-            val fragment = CategoryListFragment()
-            val args = Bundle()
-            args.putInt(ARG_POSITION, 1)
-            fragment.arguments = args
-            return fragment
+            return CategoryListFragment()
         }
     }
 

@@ -30,7 +30,7 @@ class ProductListFragment : Fragment() {
     }
 
     companion object {
-        var TAG = ProductListFragment::class.java.simpleName
+        const val TAG = "FRAGMENT_PRODUCT_LIST"
         const val CATEGORY: String = "CATEGORY"
 
         fun newInstance(category: Category?): ProductListFragment {
