@@ -97,6 +97,5 @@ class CategoryListFragment : Fragment() {
     private fun setUpToolBar(title: Int) {
         toolbar = activity?.findViewById(R.id.my_toolbar)!!
         toolbar.setTitle(title)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
     }
 }

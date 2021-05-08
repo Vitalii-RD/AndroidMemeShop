@@ -114,17 +114,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startProfileFragment() {
-        toolbar.setTitle(R.string.profile)
         loadFragment(ProfileFragment.newInstance(), ProfileFragment.TAG)
     }
 
     private fun startShopFragments() {
-        toolbar.setTitle(R.string.categories_title)
-        loadFragment(CategoryListFragment.newInstance(), CategoryListFragment.TAG)
+         loadFragment(CategoryListFragment.newInstance(), CategoryListFragment.TAG)
     }
 
     private fun startHelpFragment() {
-        toolbar.title = resources.getString(R.string.help)
         // TODO add help activity (if necessary)
         // loadFragment()
     }
