@@ -6,28 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.dudnyk.projectwithmaterialdesign.Adapters.OnItemClickListener
 import com.dudnyk.projectwithmaterialdesign.Adapters.ProductAdapter
 import com.dudnyk.projectwithmaterialdesign.Data.Category
 import com.dudnyk.projectwithmaterialdesign.Data.Product
+import com.dudnyk.projectwithmaterialdesign.databinding.FragmentProductListBinding
 import com.google.android.material.appbar.MaterialToolbar
 
 class ProductListFragment : Fragment() {
     private lateinit var toolbar: MaterialToolbar
-    private lateinit var rootView: View
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter: ProductAdapter
+    lateinit var listBinding: FragmentProductListBinding
+    lateinit var productAdapter: ProductAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onCreateComponent()
+        initObjects()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_product_list, container, false)
+        listBinding = FragmentProductListBinding.inflate(inflater, container, false)
         initView()
-        return rootView
+        return listBinding.root
     }
 
     companion object {
@@ -43,8 +42,8 @@ class ProductListFragment : Fragment() {
         }
     }
 
-    private fun onCreateComponent() {
-        adapter = ProductAdapter()
+    private fun initObjects() {
+        productAdapter = ProductAdapter()
         setUpAdapter()
         loadData(arguments?.getString(CATEGORY))
     }
@@ -60,15 +59,16 @@ class ProductListFragment : Fragment() {
     }
 
     private fun initializeRecyclerView() {
-        recyclerView = rootView.findViewById(R.id.product_list)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
+        listBinding.productList.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = productAdapter
+        }
     }
 
     private fun setUpAdapter() {
-        adapter.setOnItemClickListener(onItemClickListener = object: OnItemClickListener {
+        productAdapter.setOnItemClickListener(onItemClickListener = object: OnItemClickListener {
             override fun onItemClick(position: Int, view: View?) {
-                val product = adapter.getItem(position)!!
+                val product = productAdapter.getItem(position)!!
                 val container = if (context?.resources?.getBoolean(R.bool.two_pane) == true) R.id.product_list_detail else R.id.fragment_container
 
                 fragmentManager?.beginTransaction()?.apply {
@@ -80,12 +80,12 @@ class ProductListFragment : Fragment() {
         })
     }
 
-    private fun loadData(string: String?) {
+    private fun loadData(categoryName: String?) {
         var data = getDummyData()
-        string?.let { category ->
+        categoryName?.let { category ->
             data = data.filter { it.hasCategory(category) }
         }
-        adapter.addItems(data)
+        productAdapter.addItems(data)
     }
 
     private fun getDummyData(): List<Product> {
