@@ -21,18 +21,13 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(mainBinding.root)
+
         initObjects()
         setUpToolBar()
         setUpBottomNavigation()
         setUpFragment()
         setUpFab()
-    }
-
-    private fun initObjects() {
-        toolbar = mainBinding.mainToolbar.myToolbar
-        sp = getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)
     }
 
     companion object{
@@ -44,6 +39,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.top_app_bar, menu)
         return true
+    }
+
+    private fun initObjects() {
+        toolbar = mainBinding.mainToolbar.myToolbar
+        sp = getSharedPreferences(RegisterActivity.LOGIN, Context.MODE_PRIVATE)
     }
 
     private fun setUpFragment() {

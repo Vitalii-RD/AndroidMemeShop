@@ -18,6 +18,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener  {
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var registerBinding: ActivityRegisterBinding
     private lateinit var sp: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
         super.onCreate(savedInstanceState)

@@ -23,6 +23,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         profileBinding = FragmentProfileBinding.inflate(inflater, container, false)
+
         setUpToolBar(R.string.profile)
         initObjects()
         initView()
@@ -34,6 +35,13 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fab = activity?.findViewById(R.id.fab)!!
         fab.show()
+    }
+
+    override fun onResume() {
+        setUpToolBar(R.string.profile)
+        initObjects()
+        initView()
+        super.onResume()
     }
 
     override fun onDestroyView() {
