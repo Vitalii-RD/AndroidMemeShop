@@ -6,4 +6,7 @@
     <string name="addToCart">Add to cart</string>
     <string name="help">Help</string>
     <string name="profile">Profile</string>
+
+    <string name="d_nav_open">Open drawer</string>
+    <string name="d_nav_close">Close drawer</string>
 </resources>

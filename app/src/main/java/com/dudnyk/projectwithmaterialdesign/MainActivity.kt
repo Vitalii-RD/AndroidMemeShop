@@ -1,20 +1,27 @@
 package com.dudnyk.projectwithmaterialdesign
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
 import com.dudnyk.projectwithmaterialdesign.databinding.ActivityMainBinding
+import com.dudnyk.projectwithmaterialdesign.databinding.NavHeaderMainBinding
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var toolbar: MaterialToolbar
     private  lateinit var userPreferences: UserPreferences
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var headerBinding: NavHeaderMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_ProjectWithMaterialDesign)
@@ -23,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
 
         initObjects()
+        setUpDrawer()
         setUpToolBar()
         setUpBottomNavigation()
         setUpFragmentManager()
@@ -38,44 +46,36 @@ class MainActivity : AppCompatActivity() {
         val FRAGMENTS_WITHOUT_BACK_BUTTON = listOf(CategoryListFragment.TAG, ProfileFragment.TAG)
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        toggle.syncState()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        toggle.onConfigurationChanged(newConfig)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.top_app_bar, menu)
         return true
     }
 
-    private fun initObjects() {
-        toolbar = mainBinding.mainToolbar.myToolbar
-        userPreferences = UserPreferences(this)
-    }
-
-    private fun setUpFragmentManager() {
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount > 0) {
-                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                toolbar.setNavigationOnClickListener{ onBackPressed() }
-            } else {
-                supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-            }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val result = when {
+            //TODO add more links
+            onOptionsItemSelected(item) -> { true }
+            else -> onSharedNavigationItemSelected(item)
         }
-    }
-
-    private fun setUpToolBar() {
-        setSupportActionBar(toolbar)
-    }
-
-    private fun setUpFab() {
-        mainBinding.fab.setOnClickListener {
-            userPreferences.logOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        if (userPreferences.isLoggedIn()) {
-            mainBinding.fab.hide()
-        }
+        mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
+        return result
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+
         return when (item.itemId) {
             R.id.about_app -> {
                 startActivity(Intent(this, AppActivity::class.java))
@@ -93,25 +93,84 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpBottomNavigation() {
-        mainBinding.bottomNavigation.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.b_nav_categories -> {
-                    startShopFragments()
-                    return@setOnNavigationItemSelectedListener true
-                }
-
-                R.id.b_nav_help -> {
-                    startHelpFragment()
-                    return@setOnNavigationItemSelectedListener true
-                }
-
-                R.id.b_nav_profile -> {
-                    startProfileFragment()
-                    return@setOnNavigationItemSelectedListener true
-                }
+    override fun onBackPressed() {
+        when {
+            mainBinding.drawerLayout.isDrawerOpen(GravityCompat.START) -> {
+                mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
             }
-            false
+            supportFragmentManager.backStackEntryCount > 0 -> {
+                supportFragmentManager.popBackStack()
+            }
+            else -> super.onBackPressed()
+        }
+    }
+
+    private fun initObjects() {
+        headerBinding = NavHeaderMainBinding.bind(mainBinding.navView.getHeaderView(0))
+        toolbar = mainBinding.appMain.mainToolbar.myToolbar
+        toggle = ActionBarDrawerToggle(this, mainBinding.drawerLayout, toolbar, R.string.d_nav_open, R.string.d_nav_close)
+        userPreferences = UserPreferences(this)
+    }
+
+    private fun setUpDrawer() {
+        val user = userPreferences.getCurrentUser()
+        mainBinding.drawerLayout.addDrawerListener(toggle)
+        headerBinding.dNavProfileImg.setImageResource(user.resId)
+        headerBinding.dNavUserName.text = user.name
+        mainBinding.navView.setNavigationItemSelectedListener(this)
+    }
+
+    private fun setUpFragmentManager() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                showBackButton(true)
+            } else {
+                showBackButton(false)
+                toggle.syncState()
+            }
+        }
+    }
+
+    private fun setUpToolBar() {
+        setSupportActionBar(toolbar)
+    }
+
+    private fun setUpFab() {
+        mainBinding.appMain.fab.setOnClickListener {
+            userPreferences.logOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        if (userPreferences.isLoggedIn()) {
+            mainBinding.appMain.fab.hide()
+        }
+    }
+
+    private fun setUpBottomNavigation() {
+        mainBinding.appMain.bottomNavigation.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                //TODO add more links
+                else -> onSharedNavigationItemSelected(it)
+            }
+        }
+    }
+
+    private fun onSharedNavigationItemSelected(item: MenuItem):Boolean {
+        return when (item.itemId) {
+            R.id.b_nav_categories -> {
+                startShopFragments()
+                true
+            }
+            R.id.b_nav_help -> {
+                startHelpFragment()
+                true
+            }
+            R.id.b_nav_profile -> {
+                startProfileFragment()
+                true
+            }
+            else -> false
         }
     }
 
@@ -139,5 +198,15 @@ class MainActivity : AppCompatActivity() {
 
             commit()
         }
+    }
+
+    private fun showBackButton(isBack: Boolean) {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(isBack)
+        if (isBack)
+            toolbar.setNavigationOnClickListener { onBackPressed() }
+        else
+            toolbar.setNavigationOnClickListener{
+                mainBinding.drawerLayout.openDrawer(GravityCompat.START)
+            }
     }
 }

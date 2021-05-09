@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/d_nav_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:background="?attr/colorPrimary"
+    android:padding="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/d_nav_profile_img"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:scaleType="fitCenter"
+        app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/d_nav_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:textSize="20sp"
+        android:gravity="center" />
+</LinearLayout>
