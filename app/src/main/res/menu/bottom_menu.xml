@@ -14,4 +14,10 @@
         android:id="@+id/b_nav_profile"
         android:icon="@drawable/ic_person_24"
         android:title="@string/profile"/>
+    <item
+        android:id="@+id/b_nav_user_account"
+        android:icon="@drawable/ic_manage_accounts_24"
+        android:title="@string/user_account"
+        />
+
 </menu>

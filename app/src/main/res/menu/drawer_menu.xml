@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group
-        android:id="@+id/group_fragments">
+    <group android:id="@+id/group_fragments">
         <item
             android:id="@+id/b_nav_categories"
             android:icon="@drawable/ic_category_24"
             android:title="@string/categories_title"/>
-
         <item
             android:id="@+id/b_nav_help"
             android:icon="@drawable/ic_help_24"
             android:title="@string/help"/>
-
         <item
             android:id="@+id/b_nav_profile"
             android:icon="@drawable/ic_person_24"
             android:title="@string/profile"/>
+        <item
+            android:id="@+id/b_nav_user_account"
+            android:icon="@drawable/ic_manage_accounts_24"
+            android:title="@string/user_account"
+            />
     </group>
 
     <group android:id="@+id/group_app_info">

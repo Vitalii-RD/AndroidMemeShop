@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     companion object{
         const val FRAGMENT = "FRAGMENT"
-        val FRAGMENTS_WITHOUT_BACK_BUTTON = listOf(CategoryListFragment.TAG, ProfileFragment.TAG)
+        val FRAGMENTS_WITHOUT_BACK_BUTTON = listOf(CategoryListFragment.TAG, ProfileFragment.TAG, UserAccountFragment.TAG)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -189,26 +189,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     startProfileFragment()
                     true
                 }
+                R.id.b_nav_user_account -> {
+                    startUserAccount()
+                    true
+                }
                 else -> false
             }
         }
     }
 
     private fun isInBottomMenu(item: MenuItem): Boolean {
-        return listOf(R.id.b_nav_categories, R.id.b_nav_help, R.id.b_nav_profile).contains(item.itemId)
+        return listOf(R.id.b_nav_categories, R.id.b_nav_help, R.id.b_nav_profile, R.id.b_nav_user_account).contains(item.itemId)
+    }
+
+    private fun startShopFragments() {
+        loadFragment(CategoryListFragment.newInstance(), CategoryListFragment.TAG)
+    }
+
+    private fun startHelpFragment() {
+        // TODO add help activity (if necessary)
+        // loadFragment()
     }
 
     private fun startProfileFragment() {
         loadFragment(ProfileFragment.newInstance(), ProfileFragment.TAG)
     }
 
-    private fun startShopFragments() {
-         loadFragment(CategoryListFragment.newInstance(), CategoryListFragment.TAG)
-    }
-
-    private fun startHelpFragment() {
-        // TODO add help activity (if necessary)
-        // loadFragment()
+    private fun startUserAccount() {
+        loadFragment(UserAccountFragment.newInstance(), UserAccountFragment.TAG)
     }
 
     private fun loadFragment(fragment: Fragment, fragment_name : String) {
