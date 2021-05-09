@@ -45,7 +45,7 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun initView(product: Product) {
-        productBinding.productDetailImage.setImageDrawable(ContextCompat.getDrawable(view!!.context, product.resId))
+        productBinding.productDetailImage.setImageResource(product.resId)
         productBinding.productDetailName.text = product.name
         productBinding.productDetailPrice.text = product.getFormattedPrice()
         productBinding.productDetailDescription.text = product.description

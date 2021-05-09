@@ -38,7 +38,7 @@ class ProductAdapter: BaseRecyclerViewAdapter<Product>() {
         fun setUpView(product: Product) {
             this.product = product
             binding.productName.text = product.name
-            binding.productImg.setImageDrawable(ContextCompat.getDrawable(productBinding.root.context, product.resId))
+            binding.productImg.setImageResource(product.resId)
             binding.productPrice.text = product.getFormattedPrice()
         }
     }
