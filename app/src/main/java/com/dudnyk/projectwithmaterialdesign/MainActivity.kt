@@ -3,6 +3,7 @@ package com.dudnyk.projectwithmaterialdesign
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return result
     }
 
-    private fun isLogOut(item: MenuItem) = item.itemId == R.id.d_nav_logout
+    private fun isLogOut(item: MenuItem) = item.itemId == R.id.d_nav_log_in_out
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
@@ -138,6 +139,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val user = userPreferences.getCurrentUser()
         headerBinding.dNavProfileImg.setImageResource(user.resId)
         headerBinding.dNavUserName.text = user.name
+        mainBinding.navView.menu.findItem(R.id.d_nav_log_in_out)?.let {
+            Log.i("MENU", "HERE")
+            if (userPreferences.isLoggedIn()) it.setTitle(R.string.logout)
+            else it.setTitle(R.string.login)
+        }
     }
 
     private fun setUpFragmentManager() {
