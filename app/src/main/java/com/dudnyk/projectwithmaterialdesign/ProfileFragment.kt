@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.dudnyk.projectwithmaterialdesign.Data.User
 import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
-import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import com.dudnyk.projectwithmaterialdesign.databinding.FragmentProfileBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,7 +14,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ProfileFragment : Fragment() {
     private lateinit var profileBinding: FragmentProfileBinding
     private lateinit var toolbar: MaterialToolbar
-    private lateinit var databaseHelper: DatabaseHelper
     private lateinit var user: User
     private lateinit var fab: FloatingActionButton
     private lateinit var userPreferences: UserPreferences
@@ -65,17 +62,15 @@ class ProfileFragment : Fragment() {
 
     private fun initObjects() {
         userPreferences = this.context?.let { UserPreferences(it) }!!
-        databaseHelper = DatabaseHelper(profileBinding.root.context)
         //TODO change logic to either:
         // - redirecting to login activity instead of showing a fake account
         // - showing another fragment with "Log in" message
-        user = databaseHelper.getUser(userPreferences.getIntPreference(UserPreferences.USER_ID))
-                ?: User(-1, "Who am I?", "who@am.i", "whoami", R.drawable.unknown_user)
+        user = userPreferences.getCurrentUser()
     }
 
     private fun initView() {
         //TODO set user image
-        profileBinding.profileImg.setImageDrawable(ContextCompat.getDrawable(profileBinding.root.context, user.resId ?: R.drawable.unknown_user))
+        profileBinding.profileImg.setImageResource(user.resId)
         profileBinding.profileName.text = user.name
         profileBinding.profileEmail.text = user.email
     }
