@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity() {
         setUpFragmentManager()
         setUpFab()
 
-        startShopFragments()
+        if (savedInstanceState == null) {
+            startShopFragments()
+        }
     }
 
     companion object{
