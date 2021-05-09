@@ -30,4 +30,10 @@
             android:title="@string/about_app_title"
             />
     </group>
+
+    <item
+        android:id="@+id/d_nav_logout"
+        android:title="@string/logout"
+        android:icon="@drawable/ic_login_24"
+        />
 </menu>

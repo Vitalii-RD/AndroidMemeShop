@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         initObjects()
         setUpDrawer()
+        setUpDrawerView()
         setUpToolBar()
         setUpBottomNavigation()
         setUpFragmentManager()
@@ -39,6 +40,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (savedInstanceState == null) {
             startShopFragments()
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        setUpDrawerView()
     }
 
     companion object{
@@ -65,8 +71,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val result = when {
             //TODO add more links
             onOptionsItemSelected(item) -> { true }
-            isInBottomMenu(item.itemId) -> {
+            isInBottomMenu(item) -> {
                 mainBinding.appMain.bottomNavigation.selectedItemId = item.itemId
+                true
+            }
+            isLogOut(item) -> {
+                logOut()
                 true
             }
             else -> false
@@ -75,6 +85,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
         return result
     }
+
+    private fun isLogOut(item: MenuItem) = item.itemId == R.id.d_nav_logout
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
@@ -118,11 +130,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun setUpDrawer() {
-        val user = userPreferences.getCurrentUser()
         mainBinding.drawerLayout.addDrawerListener(toggle)
+        mainBinding.navView.setNavigationItemSelectedListener(this)
+    }
+
+    private fun setUpDrawerView() {
+        val user = userPreferences.getCurrentUser()
         headerBinding.dNavProfileImg.setImageResource(user.resId)
         headerBinding.dNavUserName.text = user.name
-        mainBinding.navView.setNavigationItemSelectedListener(this)
     }
 
     private fun setUpFragmentManager() {
@@ -141,15 +156,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun setUpFab() {
-        mainBinding.appMain.fab.setOnClickListener {
-            userPreferences.logOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+        mainBinding.appMain.fab.setOnClickListener { logOut() }
 
-        if (userPreferences.isLoggedIn()) {
+        if (userPreferences.isLoggedIn())
             mainBinding.appMain.fab.hide()
-        }
+    }
+
+    private fun logOut() {
+        userPreferences.logOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setUpBottomNavigation() {
@@ -172,26 +188,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    private fun isInBottomMenu(id: Int): Boolean {
-        return listOf(R.id.b_nav_categories, R.id.b_nav_help, R.id.b_nav_profile).contains(id)
-    }
-
-    private fun onSharedNavigationItemSelected(item: MenuItem):Boolean {
-        return when (item.itemId) {
-            R.id.b_nav_categories -> {
-                startShopFragments()
-                true
-            }
-            R.id.b_nav_help -> {
-                startHelpFragment()
-                true
-            }
-            R.id.b_nav_profile -> {
-                startProfileFragment()
-                true
-            }
-            else -> false
-        }
+    private fun isInBottomMenu(item: MenuItem): Boolean {
+        return listOf(R.id.b_nav_categories, R.id.b_nav_help, R.id.b_nav_profile).contains(item.itemId)
     }
 
     private fun startProfileFragment() {
