@@ -65,8 +65,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val result = when {
             //TODO add more links
             onOptionsItemSelected(item) -> { true }
-            else -> onSharedNavigationItemSelected(item)
+            isInBottomMenu(item.itemId) -> {
+                mainBinding.appMain.bottomNavigation.selectedItemId = item.itemId
+                true
+            }
+            else -> false
         }
+
         mainBinding.drawerLayout.closeDrawer(GravityCompat.START)
         return result
     }
@@ -150,10 +155,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setUpBottomNavigation() {
         mainBinding.appMain.bottomNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                //TODO add more links
-                else -> onSharedNavigationItemSelected(it)
+                R.id.b_nav_categories -> {
+                    startShopFragments()
+                    true
+                }
+                R.id.b_nav_help -> {
+                    startHelpFragment()
+                    true
+                }
+                R.id.b_nav_profile -> {
+                    startProfileFragment()
+                    true
+                }
+                else -> false
             }
         }
+    }
+
+    private fun isInBottomMenu(id: Int): Boolean {
+        return listOf(R.id.b_nav_categories, R.id.b_nav_help, R.id.b_nav_profile).contains(id)
     }
 
     private fun onSharedNavigationItemSelected(item: MenuItem):Boolean {
