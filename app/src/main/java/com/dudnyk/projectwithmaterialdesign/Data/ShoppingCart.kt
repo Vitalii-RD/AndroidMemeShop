@@ -14,7 +14,6 @@ data class ShoppingCart(var id: Int = UNREGISTERED_CARD_ID, var userId: Int = Us
     }
 
     constructor(userId: Int): this(getUniqueId(), userId){ }
-
     fun addProduct(product: Product) {
         val item = getItem(product.name)
         if (item != null)
@@ -22,7 +21,6 @@ data class ShoppingCart(var id: Int = UNREGISTERED_CARD_ID, var userId: Int = Us
         else
             products.add(CartItem(product, 1))
     }
-
     fun removeProduct(product: Product) {
         val item = getItem(product.name)
         if (item != null && item.quantity < 1)
@@ -41,6 +39,10 @@ data class ShoppingCart(var id: Int = UNREGISTERED_CARD_ID, var userId: Int = Us
 
     fun size(): Int {
         return products.count()
+    }
+
+    fun getCartName(): String {
+        return "Order #${id}"
     }
 
     private fun getItem(name: String) : CartItem? {

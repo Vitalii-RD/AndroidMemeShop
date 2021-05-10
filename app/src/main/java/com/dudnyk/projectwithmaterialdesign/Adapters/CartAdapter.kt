@@ -12,18 +12,18 @@ class CartAdapter: BaseRecyclerViewAdapter<CartItem>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         cartItemBinding = CartItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductHolder(cartItemBinding)
+        return CartItemHolder(cartItemBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val myHolder = holder as? ProductHolder
+        val myHolder = holder as? CartItemHolder
         val item = getItem(position)
         item?.apply {
             myHolder?.setUpView(this)
         }
     }
 
-    inner class ProductHolder(var binding: CartItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class CartItemHolder(var binding: CartItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private var cartItem: CartItem? = null
 
         init {
