@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainBinding.navView.setNavigationItemSelectedListener(this)
     }
 
-    private fun setUpDrawerView() {
+    fun setUpDrawerView() {
         val user = userPreferences.getCurrentUser()
         headerBinding.dNavProfileImg.setImageResource(user.resId)
         headerBinding.dNavUserName.text = user.name
