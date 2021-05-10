@@ -3,4 +3,7 @@
     <string name="user_account">User Account</string>
     <string name="cart">Cart</string>
     <string name="orders">Orders</string>
+    <string name="order">Make an order</string>
+    <string name="prompt_address">Address</string>
+    <string name="total_price">Totla price</string>
 </resources>

@@ -9,6 +9,7 @@ import com.dudnyk.projectwithmaterialdesign.Data.User
 import com.dudnyk.projectwithmaterialdesign.R
 import com.dudnyk.projectwithmaterialdesign.SQL.DatabaseHelper
 import java.time.LocalDateTime
+import java.util.*
 
 class UserPreferences(context: Context) {
     private val userPref: SharedPreferences = context.getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE)
@@ -75,10 +76,8 @@ class UserPreferences(context: Context) {
         return CURRENT_USER ?: default
     }
 
-
-    @RequiresApi(Build.VERSION_CODES.O)
     fun makeOrder() {
-        CURRENT_CART!!.orderDate = LocalDateTime.now()
+        CURRENT_CART!!.orderDate = Calendar.getInstance()
         ORDERS.add(CURRENT_CART!!)
         setNewCart()
     }

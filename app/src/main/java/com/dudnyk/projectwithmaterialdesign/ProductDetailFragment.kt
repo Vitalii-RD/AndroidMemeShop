@@ -20,7 +20,7 @@ class ProductDetailFragment : Fragment() {
         initObjects(inflater, container)
 
         setUpToolBar(product.name)
-        setUpCartButton()
+        setUpAddItemToCartButton()
 
         return productBinding.root
     }
@@ -31,7 +31,7 @@ class ProductDetailFragment : Fragment() {
         userPreferences = UserPreferences(productBinding.root.context)
     }
 
-    private fun setUpCartButton() {
+    private fun setUpAddItemToCartButton() {
         productBinding.addToCartBtn.setOnClickListener {
             userPreferences.getCurrentShoppingCart().addProduct(product)
         }
