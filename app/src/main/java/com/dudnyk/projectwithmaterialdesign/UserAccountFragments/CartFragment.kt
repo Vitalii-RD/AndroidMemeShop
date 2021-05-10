@@ -43,11 +43,11 @@ class CartFragment : Fragment() {
     private fun initializeVisibility() {
         if (cartAdapter.itemCount ==  0) {
             cartBinding.cartProductList.visibility = View.GONE
-            cartBinding.emptyView.setVisibility(View.VISIBLE);
+            cartBinding.emptyView.visibility = View.VISIBLE
         }
         else {
-            cartBinding.cartProductList.visibility = View.VISIBLE;
-            cartBinding.emptyView.setVisibility(View.GONE)
+            cartBinding.cartProductList.visibility = View.VISIBLE
+            cartBinding.emptyView.visibility = View.GONE
         }
     }
 

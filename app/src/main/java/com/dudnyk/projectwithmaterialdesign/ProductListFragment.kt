@@ -51,6 +51,18 @@ class ProductListFragment : Fragment() {
     private fun initView() {
         initializeRecyclerView()
         setUpToolBar(R.string.products_title, arguments?.getString(CATEGORY))
+        initializeVisibility()
+    }
+
+    private fun initializeVisibility() {
+        if (productAdapter.itemCount ==  0) {
+            listBinding.productList.visibility = View.GONE
+            listBinding.noProducts.visibility = View.VISIBLE
+        }
+        else {
+            listBinding.productList.visibility = View.VISIBLE
+            listBinding.noProducts.visibility = View.GONE
+        }
     }
 
     private fun setUpToolBar(title: Int, category: String?) {
