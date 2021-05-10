@@ -12,6 +12,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
+import com.dudnyk.projectwithmaterialdesign.UserAccountFragments.UserAccountFragment
 import com.dudnyk.projectwithmaterialdesign.databinding.ActivityMainBinding
 import com.dudnyk.projectwithmaterialdesign.databinding.NavHeaderMainBinding
 import com.google.android.material.appbar.MaterialToolbar

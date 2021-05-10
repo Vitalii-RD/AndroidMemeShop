@@ -5,21 +5,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.dudnyk.projectwithmaterialdesign.Data.Product
+import com.dudnyk.projectwithmaterialdesign.Preferences.UserPreferences
 import com.dudnyk.projectwithmaterialdesign.databinding.FragmentProductDetailBinding
 import com.google.android.material.appbar.MaterialToolbar
 
 class ProductDetailFragment : Fragment() {
-    lateinit var toolbar: MaterialToolbar
-    lateinit var productBinding: FragmentProductDetailBinding
-    lateinit var product: Product
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var productBinding: FragmentProductDetailBinding
+    private lateinit var product: Product
+    private lateinit var userPreferences: UserPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        initObjects(inflater, container)
+
+        setUpToolBar(product.name)
+        setUpCartButton()
+
+        return productBinding.root
+    }
+
+    private fun initObjects(inflater: LayoutInflater, container: ViewGroup?) {
         productBinding = FragmentProductDetailBinding.inflate(inflater, container, false)
         product = arguments?.getParcelable(PRODUCT)!!
-        setUpToolBar(product.name)
-        return productBinding.root
+        userPreferences = UserPreferences(productBinding.root.context)
+    }
+
+    private fun setUpCartButton() {
+        productBinding.addToCartBtn.setOnClickListener {
+            userPreferences.getCurrentShoppingCart().addProduct(product)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
