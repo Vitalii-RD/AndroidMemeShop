@@ -36,7 +36,9 @@ class OrderAdapter: BaseRecyclerViewAdapter<ShoppingCart>() {
 
         fun setUpView(cart: ShoppingCart) {
             this.cart = cart
+
             binding.orderName.text = cart.getCartName()
+            binding.orderDate.text = cart.getFormattedOrderDate()
 
             val images = listOf(binding.productImg1, binding.productImg2, binding.productImg3, binding.productImg4)
             cart.products.forEachIndexed { i, item ->

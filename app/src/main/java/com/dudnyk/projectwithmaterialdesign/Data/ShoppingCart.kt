@@ -1,5 +1,7 @@
 package com.dudnyk.projectwithmaterialdesign.Data
 
+import java.text.SimpleDateFormat
+
 import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
@@ -43,6 +45,10 @@ data class ShoppingCart(var id: Int = UNREGISTERED_CARD_ID, var userId: Int = Us
 
     fun getCartName(): String {
         return "Order #${id}"
+    }
+
+    fun getFormattedOrderDate(pattern: String = "yyyy-MM-dd"): String {
+        return SimpleDateFormat(pattern, Locale.ENGLISH).format(orderDate?.time!!)
     }
 
     private fun getItem(name: String) : CartItem? {
